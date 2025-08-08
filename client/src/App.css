@@ -1,42 +1,53 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+@import "tailwindcss";
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html, body , #root{
+ 
+  background: #181818;
+}
+main{
+  width: 100%;
+  padding: 1rem;
+  /* gap: 1rem; */
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+main .left, 
+main .right{
+  height: 100%;
+  flex-basis: 50%;
+
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+
+/* Hide both X and Y scrollbars but allow scroll */
+.right::-webkit-scrollbar {
+  display: none;
+}
+.right {
+  -ms-overflow-style: none; /* IE & Edge */
+  scrollbar-width: none;    /* Firefox */
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.review-btn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 15px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  width: 80px;
+  margin: 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
 }
 
-.card {
-  padding: 2em;
+.review-btn:hover {
+  background-color: #45a049;
 }
 
-.read-the-docs {
-  color: #888;
-}

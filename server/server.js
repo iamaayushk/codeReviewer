@@ -1,5 +1,7 @@
 require('dotenv').config();
 const app= require('./src/app');
+const cors= require('cors');
+
 
 
 app.listen(3000,()=>{

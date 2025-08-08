@@ -1,33 +1,85 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import "prismjs/themes/prism-tomorrow.css";
+import prism from "prismjs";
+import React,{useEffect, useState} from 'react';
+import Editor from "react-simple-code-editor";
+import axios from 'axios';
+import Markdown from 'react-markdown';
+import rehypeHighlight from 'rehype-highlight';
+import "highlight.js/styles/github-dark.css";
 
 function App() {
-  const [count, setCount] = useState(0)
+  useEffect(() => {
+    prism.highlightAll();
+  }, []);
 
+  const [code, setcode] = useState(`enter your code here`);
+  
+  const [review, setreview] = useState('');
+  const [loading, setLoading] = useState(false);
+  
+  async function reviewCode() {
+    setLoading(true);
+    try {
+      const response = await axios.post('http://localhost:3000/ai/get-review', { code });
+      setreview(response.data);
+    } catch (error) {
+      console.error("Error fetching review:", error);
+    } finally {
+      setLoading(false);
+    }
+  }
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div  className=" h-[50px] flex justify-center items-center">
+    <h1 className="text-zinc-400 hover:text-zinc-500 text-center text-3xl top-2 font-semibold">Code Reviewer</h1>
+    </div>
+    <main className=" lg:flex md:flex sm:flex gap-5 h-screen">
+  
+  <div className="left right  border border-zinc-500 h-full rounded-md bg-[#141313eb] overflow-auto">
+    <div className="code min-h-[full] w-full text-zinc-400">
+      <Editor
+
+        value={code}
+        onValueChange={code => setcode(code)}
+        highlight={code => prism.highlight(code, prism.languages.javascript, 'javascript')}
+        padding={10}
+        className="text-white"
+        style={{
+          fontFamily: '"Fira code", "Fira Mono", monospace',
+          fontSize: 16,
+          height: "100%",
+          width: "100%",
+          borderRadius: "5px",
+        }}
+      />
+    </div>
+   <div className="flex justify-end p-4">
+  <div
+    className="review-btn active:scale-95 transition-all duration-200 ease-in-out text-black bg-sky-200 font-semibold hover:bg-sky-400 hover:text-white cursor-pointer rounded-lg px-4 py-2"
+    onClick={reviewCode}
+  >
+    Review
+  </div>
+</div>
+
+  </div>
+
+  <div className="right h-full rounded-md text-white border border-zinc-500 overflow-auto bg-[#292929] px-2 py-5">
+    {loading ? (
+      <div className="flex flex-col justify-center items-center p-2 h-full">
+        <div className="h-12 w-12 border-4 border-gray-400 border-t-transparent rounded-full animate-spin mb-5"></div>
+        <p className="mt-8 text-gray-200 text-center">Your Code review is in process. <br/> <span>Please wait.</span></p>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+    ) : (
+      <Markdown rehypePlugins={[rehypeHighlight]}>
+        {review}
+      </Markdown>
+    )}
+  </div>
+
+</main>
+
     </>
   )
 }
