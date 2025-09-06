@@ -4,7 +4,7 @@ const cors= require('cors');
 
 
 app.use(cors({
-    origin: 'https://codeaudit.vercel.app/' ,
+    origin: 'https://codeaudit.vercel.app' ,
     methods:['GET,POST'],
     credentials:true
 }));
