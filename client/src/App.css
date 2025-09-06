@@ -1,22 +1,45 @@
+.clear-btn {
+  background-color: #f87171;
+  color: white;
+  padding: 10px 15px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  width: 80px;
+  margin: 20px 0 20px 0;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.clear-btn:hover {
+  background-color: #ef4444;
+}
+
 @import "tailwindcss";
 
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
-html, body , #root{
- 
+
+html,
+body,
+#root {
+
   background: #181818;
 }
-main{
+
+main {
   width: 100%;
   padding: 1rem;
   /* gap: 1rem; */
 }
 
-main .left, 
-main .right{
+main .left,
+main .right {
   height: 100%;
   flex-basis: 50%;
 
@@ -24,12 +47,36 @@ main .right{
 
 
 /* Hide both X and Y scrollbars but allow scroll */
-.right::-webkit-scrollbar {
-  display: none;
+
+/* Custom dark horizontal scrollbar for review panel */
+.review-scrollbar {
+  overflow-x: auto;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #222 #292929;
+  -ms-overflow-style: none;
+  position: relative;
 }
-.right {
-  -ms-overflow-style: none; /* IE & Edge */
-  scrollbar-width: none;    /* Firefox */
+
+/* Hide only the horizontal scrollbar for Webkit browsers */
+.review-scrollbar::-webkit-scrollbar:horizontal {
+  height: 0 !important;
+  background: transparent !important;
+  display: none !important;
+}
+
+.review-scrollbar::-webkit-scrollbar:vertical {
+  width: 8px;
+  background: #292929;
+}
+
+.review-scrollbar::-webkit-scrollbar-thumb:vertical {
+  background: #222;
+  border-radius: 4px;
+}
+
+.review-scrollbar::-webkit-scrollbar-thumb:vertical:hover {
+  background: #333;
 }
 
 .review-btn {
@@ -51,3 +98,10 @@ main .right{
   background-color: #45a049;
 }
 
+.review-btn:disabled,
+.review-btn[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed !important;
+  background-color: #4CAF50;
+  color: white;
+}
