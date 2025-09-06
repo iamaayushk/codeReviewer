@@ -2,10 +2,9 @@ const express = require('express');
 const app=express();
 const cors= require('cors');
 
-const allowedOrigins = ['http://localhost:5173',
-            'https://codeaudit.vercel.app/'];
+
 app.use(cors({
-    origin: allowedOrigins,
+    origin: 'https://codeaudit.vercel.app/' ,
     methods:['GET,POST'],
     credentials:true
 }));
